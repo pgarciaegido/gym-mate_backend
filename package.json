@@ -4,7 +4,9 @@
   "description": "Backend of gym-mate",
   "main": "index.js",
   "scripts": {
-    "test": "mocha src/**/**.spec.js"
+    "test": "mocha src/**/**.spec.js",
+    "build-docs": "jsdoc -r ./src -d docs",
+    "serve-docs": "http-server ./docs"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,8 @@
     "eslint": "^4.7.2",
     "eslint-config-airbnb-base": "^12.0.1",
     "eslint-plugin-import": "^2.7.0",
+    "http-server": "^0.10.0",
+    "jsdoc": "^3.5.5",
     "mocha": "^3.5.3"
   }
 }

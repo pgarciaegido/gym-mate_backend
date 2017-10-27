@@ -1,11 +1,8 @@
 /* eslint-env mocha */
 
 const User = require('./user.js');
-const { uri } = require('../config/db.js');
 
 const { expect } = require('chai');
-const Mongo = require('mongodb').MongoClient;
-
 
 describe('User module', () => {
 	describe('"up"', () => {

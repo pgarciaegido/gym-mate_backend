@@ -4,31 +4,14 @@ const Mongo = require('mongodb').MongoClient;
 const dbConfig = require('../config/db.js');
 
 const server = new Hapi.Server();
+const { loginRouter } = require('../api/login/router/loginRouter');
 
 server.connection({
 	host: 'localhost',
 	port: 5000
 });
 
-server.route({
-	method: 'GET',
-	path: '/hello',
-	handler(req, res) {
-		const toInsert = { name: 'Queipo', age: 25 };
-
-		Mongo.connect(dbConfig.uri)
-			.then((db) => {
-				db.collection('ejemplo').insert(toInsert)
-					.then((r) => {
-						res('Hello!');
-					});
-			})
-			.catch((err) => {
-				console.log('llegamos al error');
-				console.log(err);
-			});
-	}
-});
+server.route(loginRouter);
 
 server.start((err) => {
 	if (err) {
@@ -37,3 +20,5 @@ server.start((err) => {
 
 	console.log(`Server running at: ${server.info.uri}`);
 });
+
+module.exports = server;

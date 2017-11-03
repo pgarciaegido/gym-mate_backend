@@ -4,6 +4,7 @@
   "description": "Backend of gym-mate",
   "main": "index.js",
   "scripts": {
+    "start-dev": "nodemon --inspect src/server/index.js",
     "test": "mocha src/**/**.spec.js",
     "build-docs": "jsdoc -r ./src -d docs",
     "serve-docs": "http-server ./docs"
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/pgarciaegido/gym-mate_backend#readme",
   "dependencies": {
     "hapi": "^16.6.2",
+    "joi": "^13.0.1",
     "mongodb": "^2.2.31"
   },
   "devDependencies": {

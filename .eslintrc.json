@@ -2,7 +2,7 @@
     "extends": "airbnb-base",
     "rules": {
         //"linebreak-style": ["error", "windows"], // For windows
-        "indent": [2, "tab"],
+        "indent": [4, "tab"],
         "no-console": "off",
         "comma-dangle": ["error", "never"],
         "no-tabs": 0      

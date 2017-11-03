@@ -1,5 +1,7 @@
 const Joi = require('joi');
 
+const { checkCredentialsManager } = require('../dao/loginDao');
+
 const loginRouter = {
 	method: 'POST',
 	path: '/login',
@@ -12,8 +14,13 @@ const loginRouter = {
 		}
 	},
 	handler(request, reply) {
-		console.log('hola');
-		reply('works');
+		checkCredentialsManager(request.payload)
+		.then(res => {
+			reply(res);
+		})
+		.catch(err => {
+			reply(err);
+		});
 	}
 };
 

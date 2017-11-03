@@ -1,5 +1,4 @@
 const Hapi = require('hapi');
-const Mongo = require('mongodb').MongoClient;
 
 const dbConfig = require('../config/db.js');
 

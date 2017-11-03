@@ -1,20 +1,21 @@
 const Joi = require('joi');
 
-const { checkCredentialsManager } = require('../manager/loginManager');
+const { signupHandler } = require('../manager/signupManager');
 
-const loginRouter = {
+const signupRouter = {
 	method: 'POST',
-	path: '/login',
+	path: '/signup',
 	config: {
 		validate: {
 			payload: {
+                name: Joi.string().max(20).required(),
 				email: Joi.string().email().required(),
 				password: Joi.string().min(8).required()
 			}
 		}
 	},
 	handler(request, reply) {
-		checkCredentialsManager(request.payload)
+		signupHandler(request.payload)
 		.then(res => {
 			reply(res);
 		})
@@ -24,4 +25,6 @@ const loginRouter = {
 	}
 };
 
-module.exports = { loginRouter };
+module.exports = {
+    signupRouter
+}

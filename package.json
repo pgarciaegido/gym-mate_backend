@@ -1,6 +1,6 @@
 {
   "name": "gym-mate_backend",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Backend of gym-mate",
   "main": "index.js",
   "scripts": {

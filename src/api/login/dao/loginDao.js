@@ -17,9 +17,10 @@ const checkCredentialsDao = ({email, password}) => {
                 }
 
                 bcrypt.compare(password, res.password)
-                .then(res => {
-                    if (res) {
-                        return resolve('SUCCESSFUL_LOGIN');
+                .then(correct => {
+                    if (correct) {
+                        const { name, email } = res;
+                        return resolve({name, email});
                     }
 
                     reject('WRONG_PASSWORD');

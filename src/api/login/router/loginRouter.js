@@ -11,7 +11,8 @@ const loginRouter = {
 				email: Joi.string().email().required(),
 				password: Joi.string().min(8).required()
 			}
-		}
+		},
+		cors: true
 	},
 	handler(request, reply) {
 		checkCredentialsManager(request.payload)

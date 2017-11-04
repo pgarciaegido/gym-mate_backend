@@ -1,10 +1,13 @@
 {
   "name": "gym-mate_backend",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Backend of gym-mate",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start-dev": "nodemon --inspect src/server/index.js",
+    "test": "mocha src/**/**.spec.js",
+    "build-docs": "jsdoc -r ./src -d docs",
+    "serve-docs": "http-server ./docs"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,20 @@
   "bugs": {
     "url": "https://github.com/pgarciaegido/gym-mate_backend/issues"
   },
-  "homepage": "https://github.com/pgarciaegido/gym-mate_backend#readme"
+  "homepage": "https://github.com/pgarciaegido/gym-mate_backend#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "hapi": "^16.6.2",
+    "joi": "^13.0.1",
+    "mongodb": "^2.2.31"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.7.2",
+    "eslint-config-airbnb-base": "^12.0.1",
+    "eslint-plugin-import": "^2.7.0",
+    "http-server": "^0.10.0",
+    "jsdoc": "^3.5.5",
+    "mocha": "^3.5.3"
+  }
 }

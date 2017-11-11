@@ -1,5 +1,6 @@
 const Mongo = require('mongodb').MongoClient;
-const bcrypt = require('bcrypt');
+const Bcrypt = require('bcrypt');
+const Boom = require('boom');
 const { uri } = require('../../../config/db');
 
 const checkCredentialsDao = ({email, password}) => {
@@ -13,22 +14,22 @@ const checkCredentialsDao = ({email, password}) => {
             .then((res) => {
 
                 if (!res) {
-                    return reject('USER_DOES_NOT_EXIST');
+                    return reject(Boom.unauthorized('User does not exist'));
                 }
 
-                bcrypt.compare(password, res.password)
+                Bcrypt.compare(password, res.password)
                 .then(correct => {
                     if (correct) {
                         const { name, email } = res;
                         return resolve({name, email});
                     }
 
-                    reject('WRONG_PASSWORD');
+                    reject(Boom.unauthorized('Wrong password'));
                 })
             });
         })
         .catch((err) => {
-            reject(err);
+            reject(Boom.serverUnavailable(err));
         });
     });
 }

@@ -12,16 +12,13 @@ const signupRouter = {
 				email: Joi.string().email().required(),
 				password: Joi.string().min(8).required()
 			}
-		}
+		},
+		cors: true
 	},
 	handler(request, reply) {
 		signupHandler(request.payload)
-		.then(res => {
-			reply(res);
-		})
-		.catch(err => {
-			reply(err);
-		});
+		.then(res => reply(res) )
+		.catch(err => reply(err) );
 	}
 };
 

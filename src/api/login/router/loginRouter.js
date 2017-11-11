@@ -16,12 +16,8 @@ const loginRouter = {
 	},
 	handler(request, reply) {
 		checkCredentialsManager(request.payload)
-		.then(res => {
-			reply(res);
-		})
-		.catch(err => {
-			reply(err);
-		});
+		.then(res => reply(res) )
+		.catch(err => reply(err).code(400) );
 	}
 };
 

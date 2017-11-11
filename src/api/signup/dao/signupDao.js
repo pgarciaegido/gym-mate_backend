@@ -1,5 +1,6 @@
 const Mongo = require('mongodb').MongoClient;
-const bcrypt = require('bcrypt');
+const Bcrypt = require('bcrypt');
+const Boom = require('boom');
 const { uri } = require('../../../config/db');
 
 const saltRounds = 10;
@@ -16,19 +17,19 @@ const registerNewUser = (userData) => {
             .then(res => {
 
                 if (res) {
-                    return reject('EMAIL_ALREADY_EXISTS');
+                    return reject(Boom.conflict('Email already exists'));
                 }
 
-                bcrypt.hash(userData.password, saltRounds)
+                Bcrypt.hash(userData.password, saltRounds)
                 .then(hash => {
 
                     userData.password = hash;
 
                     collection.insert(userData)
-                    .then(res => resolve('SUCCESS_INSERTING_USER'))
+                    .then(res => resolve('Success inserting user'))
                 })
             })
-            .catch(err => reject('ERROR_WITH_DB'));
+            .catch(err => reject(Boom.serverUnavailable('Error with DB')));
         })
         .catch(err => reject(err));
     });

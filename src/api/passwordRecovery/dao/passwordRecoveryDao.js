@@ -11,11 +11,11 @@ const emailExists = (email) => {
 
             const collection = db.collection('users');
 
-            collection.findOne({ email: email.email })
+            collection.findOne({ email })
             .then(res => {
                 if (!res) return reject(Boom.unauthorized('User does not exist'));
 
-                return resolve(true);
+                return resolve(res.name);
             })
         })
         .catch((err) => Boom.serverUnavailable('There was a problem with server. Please try again.'));

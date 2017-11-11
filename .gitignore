@@ -2,3 +2,4 @@ node_modules
 .vscode
 docs
 out
+src/config/secrets.js

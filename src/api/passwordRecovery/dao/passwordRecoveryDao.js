@@ -15,7 +15,7 @@ const emailExists = (email) => {
             .then(res => {
                 if (!res) return reject(Boom.unauthorized('User does not exist'));
 
-                return resolve(res.name);
+                return resolve(res);
             })
         })
         .catch((err) => Boom.serverUnavailable('There was a problem with server. Please try again.'));

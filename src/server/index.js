@@ -5,7 +5,7 @@ const server = new Hapi.Server();
 
 const { loginRouter } = require('../api/login/router/loginRouter');
 const { signupRouter } = require('../api/signup/router/signupRouter');
-const { askForPasswordRecovery } = require('../api/passwordRecovery/router/passwordRecoveryRouter'); 
+const { askForPasswordRecovery, changePasswordGet, changePasswordPost } = require('../api/passwordRecovery/router/passwordRecoveryRouter'); 
 
 // Connection
 server.connection({
@@ -17,6 +17,8 @@ server.connection({
 server.route(loginRouter);
 server.route(signupRouter);
 server.route(askForPasswordRecovery);
+server.route(changePasswordGet);
+server.route(changePasswordPost);
 
 // Run
 server.start((err) => {

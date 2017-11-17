@@ -1,49 +1,59 @@
 const Boom = require('boom');
-const jwt = require('jwt-simple');
-const { emailExists } = require('../dao/passwordRecoveryDao');
+const { emailExists, setNewPasswordDao } = require('../dao/passwordRecoveryDao');
 const { sendEmail } = require('./sendRecoveryPassEmail');
+const { validateJWToken, createJWToken } = require('./JWTokenHelper');
 
 const askForPasswordRecoveryManager = (payload) => {
     return new Promise((resolve, reject) => {
 
         emailExists(payload.email)
-        .then((res) => {
-            if (!res) return reject(Boom.unauthorized('User does not exist'));
+            .then((res) => {
+                if (!res) return reject(Boom.unauthorized('User does not exist'));
 
-            // Creates JWT. 
-            const pl = { email: res.email };
-            const secret = createJWTSecret(res.password, res._id);
-            const token = jwt.encode(pl, secret);
-            
-            sendEmail(payload.email, res.name, token)
-            .then(res => resolve(res))
-            .catch(err => reject(err));
-        })
-        .catch((err) => reject(err));
+                const pl = { email: res.email };
+                createJWToken(pl, res)
+                    .then(token => {
+                        sendEmail(payload.email, res.name, token)
+                            .then(res => resolve(res))
+                            .catch(err => reject(err));
+                    })
+            })
+            .catch((err) => reject(err));
     });
 };
 
-const validateJWTToken = ({email, token}) => {
+const allowChangePassword = ({ email, token }) => {
     return new Promise((resolve, reject) => {
 
         emailExists(email)
-        .then((res) => {
-            if (!res) return reject(Boom.unauthorized('User does not exist'));
+            .then((res) => {
+                if (!res) return reject(Boom.unauthorized('User does not exist'));
 
-            // Decodes JWT.
-            const secret = createJWTSecret(res.password, res._id);
-            const decode = jwt.decode(token, secret);
-
-            if (decode.email !== res.email) return reject(Boom.unauthorized('There was some problem with the token'));
-
-            return resolve(decode);
-        })
-        .catch(err => reject(Boom.unauthorized(`There is been an error. ${err}`)));
+                validateJWToken(res, token)
+                .then(() => resolve('OK'))
+                .catch(err => reject('Invalid token'));
+            })
+            .catch(err => reject(Boom.unauthorized(`There is been an error. ${err}`)));
     });
 };
 
-const createJWTSecret = (password, _id) => {
-    return `${password}-${_id.toString()}`;
+const setNewPasswordManager = ({ password }, { email, token }) => {
+    return new Promise((resolve, reject) => {
+
+        emailExists(email)
+            .then(res => {
+
+                // Validates with old password
+                validateJWToken(res, token)
+                .then(valid => {
+
+                    setNewPasswordDao(password, email)
+                    .then(res => resolve(res));
+                })
+                .catch(err => reject(Boom.unauthorized(`Error with JWT : ${err}`)));
+            })
+            .catch(err => reject(Boom.unauthorized(`Error setting new password: ${err}`)));
+    });
 }
 
-module.exports = { askForPasswordRecoveryManager, validateJWTToken };
+module.exports = { askForPasswordRecoveryManager, allowChangePassword, setNewPasswordManager };

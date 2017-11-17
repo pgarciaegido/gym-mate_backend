@@ -1,6 +1,9 @@
 const Mongo = require('mongodb').MongoClient;
 const Boom = require('boom');
+const Bcrypt = require('bcrypt');
 const { uri } = require('../../../config/db');
+
+const saltRounds = 10;
 
 const emailExists = (email) => {
     console.log(email.email);
@@ -20,6 +23,27 @@ const emailExists = (email) => {
         })
         .catch((err) => Boom.serverUnavailable('There was a problem with server. Please try again.'));
     });
+};
+
+const setNewPasswordDao = (password, email) => {
+    return new Promise ((resolve, reject) => {
+
+        Mongo.connect(uri)
+        .then((db) => {
+    
+            const collection = db.collection('users');
+    
+            Bcrypt.hash(password, saltRounds)
+            .then(hash => {
+    
+                const insert = { password: hash };
+    
+                collection.findOneAndUpdate({ email }, { $set: insert })
+                .then(res => resolve(res))
+            });
+        })
+        .catch((err) => Boom.serverUnavailable('There was a problem with server. Please try again.'));
+    })
 }
 
-module.exports = { emailExists };
+module.exports = { emailExists, setNewPasswordDao };

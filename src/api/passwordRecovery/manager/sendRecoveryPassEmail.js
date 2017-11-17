@@ -14,7 +14,7 @@ const sendEmail = (emailTo, userName, token) => {
             }
         });
 
-        // TODO: Link should point to FRONT END, and it should handle api call.
+        // TODO: Link should point to FRONT END, and it should handle the api call.
         let mailOptions = {
             from: 'pgarciaegido@gmail.com',
             to: emailTo,

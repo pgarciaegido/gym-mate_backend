@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const { askForPasswordRecoveryManager, validateJWTToken } = require('../manager/passwordRecoveryManager');
+const { askForPasswordRecoveryManager, allowChangePassword, setNewPasswordManager } = require('../manager/passwordRecoveryManager');
 
 const askForPasswordRecovery = {
 	method: 'POST',
@@ -27,7 +27,7 @@ const changePasswordGet = {
 		cors: true
 	},
 	handler(request, reply) {
-		validateJWTToken(request.params)
+		allowChangePassword(request.params)
 		.then(res => reply(res))
 		.catch(err => reply(err));
 	}
@@ -35,17 +35,19 @@ const changePasswordGet = {
 
 const changePasswordPost = {
 	method: 'POST',
-	path: '/introduce-new-password',
+	path: '/introduce-new-password/{email}/{token}',
 	config: {
 		validate: {
 			payload: {
-				email: Joi.string().min(8).required()
+				password: Joi.string().min(8).required()
 			}
 		},
 		cors: true
 	},
 	handler(request, reply) {
-		
+		setNewPasswordManager(request.payload, request.params)
+		.then(res => reply(res))
+		.catch(err => reply(err));
 	}
 };
 

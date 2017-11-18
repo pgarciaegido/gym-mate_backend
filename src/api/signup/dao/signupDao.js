@@ -26,7 +26,7 @@ const registerNewUser = (userData) => {
                                 const newData = userData;
                                 newData.password = hash;
 
-                                collection.insert(userData)
+                                collection.insert(newData)
                                     .then(() => resolve('Success inserting user'));
                             });
                     })

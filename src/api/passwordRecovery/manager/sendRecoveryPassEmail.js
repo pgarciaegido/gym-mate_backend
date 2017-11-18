@@ -5,8 +5,8 @@ const { GMAIL_PASSWORD } = require('../../../config/secrets');
 
 const sendEmail = (emailTo, userName, token) => {
     return new Promise((resolve, reject) => {
-            
-        let transporter = nodemailer.createTransport({
+
+        const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: 'pgarciaegido@gmail.com',
@@ -15,7 +15,7 @@ const sendEmail = (emailTo, userName, token) => {
         });
 
         // TODO: Link should point to FRONT END, and it should handle the api call.
-        let mailOptions = {
+        const mailOptions = {
             from: 'pgarciaegido@gmail.com',
             to: emailTo,
             subject: 'Gym Mate password recovery',
@@ -25,7 +25,7 @@ const sendEmail = (emailTo, userName, token) => {
             </div>`
         };
 
-        transporter.sendMail(mailOptions, (error, info) => {
+        transporter.sendMail(mailOptions, (error) => {
             if (error) {
                 reject(Boom.badRequest('Sending email failed.'));
             }

@@ -1,7 +1,8 @@
 const jwt = require('jwt-simple');
+const Boom = require('boom');
 
 const createJWToken = (payload, { password, _id }) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
 
         const secret = createJWTSecret(password, _id);
         const token = jwt.encode(payload, secret);

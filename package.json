@@ -6,6 +6,8 @@
   "scripts": {
     "start-dev": "nodemon --inspect src/server/index.js",
     "test": "mocha src/**/**.spec.js",
+    "lint": "eslint src",
+    "lint-autofix": "eslint src --fix",
     "build-docs": "jsdoc -r ./src -d docs",
     "serve-docs": "http-server ./docs"
   },

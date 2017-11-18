@@ -7,43 +7,43 @@ const saltRounds = 10;
 
 const emailExists = (email) => {
     console.log(email.email);
-    return new Promise ((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
         Mongo.connect(uri)
-        .then((db) => {
+            .then((db) => {
 
-            const collection = db.collection('users');
+                const collection = db.collection('users');
 
-            collection.findOne({ email })
-            .then(res => {
-                if (!res) return reject(Boom.unauthorized('User does not exist'));
+                collection.findOne({ email })
+                    .then((res) => {
+                        if (!res) return reject(Boom.unauthorized('User does not exist'));
 
-                return resolve(res);
+                        return resolve(res);
+                    });
             })
-        })
-        .catch((err) => Boom.serverUnavailable('There was a problem with server. Please try again.'));
+            .catch(() => Boom.serverUnavailable('There was a problem with server. Please try again.'));
     });
 };
 
 const setNewPasswordDao = (password, email) => {
-    return new Promise ((resolve, reject) => {
+    return new Promise((resolve) => {
 
         Mongo.connect(uri)
-        .then((db) => {
-    
-            const collection = db.collection('users');
-    
-            Bcrypt.hash(password, saltRounds)
-            .then(hash => {
-    
-                const insert = { password: hash };
-    
-                collection.findOneAndUpdate({ email }, { $set: insert })
-                .then(res => resolve(res))
-            });
-        })
-        .catch((err) => Boom.serverUnavailable('There was a problem with server. Please try again.'));
-    })
-}
+            .then((db) => {
+
+                const collection = db.collection('users');
+
+                Bcrypt.hash(password, saltRounds)
+                    .then((hash) => {
+
+                        const insert = { password: hash };
+
+                        collection.findOneAndUpdate({ email }, { $set: insert })
+                            .then(res => resolve(res));
+                    });
+            })
+            .catch(() => Boom.serverUnavailable('There was a problem with server. Please try again.'));
+    });
+};
 
 module.exports = { emailExists, setNewPasswordDao };

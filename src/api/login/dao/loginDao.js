@@ -3,37 +3,37 @@ const Bcrypt = require('bcrypt');
 const Boom = require('boom');
 const { uri } = require('../../../config/db');
 
-const checkCredentialsDao = ({email, password}) => {
-    return new Promise ((resolve, reject) => {
+const checkCredentialsDao = ({ email, password }) => {
+    return new Promise((resolve, reject) => {
 
         Mongo.connect(uri)
-        .then((db) => {
-            const collection = db.collection('users');
-    
-            collection.findOne({email})
-            .then((res) => {
+            .then((db) => {
+                const collection = db.collection('users');
 
-                if (!res) {
-                    return reject(Boom.unauthorized('User does not exist'));
-                }
+                collection.findOne({ email })
+                    .then((res) => {
 
-                Bcrypt.compare(password, res.password)
-                .then(correct => {
-                    if (correct) {
-                        const { name, email } = res;
-                        return resolve({name, email});
-                    }
+                        if (!res) {
+                            return reject(Boom.unauthorized('User does not exist'));
+                        }
 
-                    reject(Boom.unauthorized('Wrong password'));
-                })
+                        Bcrypt.compare(password, res.password)
+                            .then((correct) => {
+                                if (correct) {
+                                    const { name, email: { mail } } = res;
+                                    return resolve({ name, mail });
+                                }
+
+                                reject(Boom.unauthorized('Wrong password'));
+                            });
+                    });
+            })
+            .catch((err) => {
+                reject(Boom.serverUnavailable(err));
             });
-        })
-        .catch((err) => {
-            reject(Boom.serverUnavailable(err));
-        });
     });
-}
+};
 
 module.exports = {
     checkCredentialsDao
-}
+};

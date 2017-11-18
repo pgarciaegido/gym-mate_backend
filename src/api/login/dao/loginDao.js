@@ -3,6 +3,11 @@ const Bcrypt = require('bcrypt');
 const Boom = require('boom');
 const { uri } = require('../../../config/db');
 
+/**
+ * @description Check user credentials against db.
+ * @param {Object} credentials User credentials
+ * @returns {Promise<userInfo>} Promise with user info or error.
+ */
 const checkCredentialsDao = ({ email, password }) => {
     return new Promise((resolve, reject) => {
 

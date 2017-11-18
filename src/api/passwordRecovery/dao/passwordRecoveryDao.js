@@ -5,6 +5,11 @@ const { uri } = require('../../../config/db');
 
 const saltRounds = 10;
 
+/**
+ * @description Checks the existance of email in db.
+ * @param {String} email User email
+ * @return {Promise<userInfo>} Promise with user info or error.
+ */
 const emailExists = (email) => {
     console.log(email.email);
     return new Promise((resolve, reject) => {
@@ -25,7 +30,13 @@ const emailExists = (email) => {
     });
 };
 
-const setNewPasswordDao = (password, email) => {
+/**
+ * @description Reset user password.
+ * @param {String} newPassword New password
+ * @param {String} email User email
+ * @returns {Promise<inserted>} Promise with inserted object or error.
+ */
+const setNewPasswordDao = (newPassword, email) => {
     return new Promise((resolve) => {
 
         Mongo.connect(uri)
@@ -33,7 +44,7 @@ const setNewPasswordDao = (password, email) => {
 
                 const collection = db.collection('users');
 
-                Bcrypt.hash(password, saltRounds)
+                Bcrypt.hash(newPassword, saltRounds)
                     .then((hash) => {
 
                         const insert = { password: hash };

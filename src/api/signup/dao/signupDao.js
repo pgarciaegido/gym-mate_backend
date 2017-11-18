@@ -5,6 +5,12 @@ const { uri } = require('../../../config/db');
 
 const saltRounds = 10;
 
+/**
+ * @description Registers new user in db. First checks that user email does not exists, then hash
+ * password and eventually inserts it.
+ * @param {Object} userData User data brought from the form.
+ * @returns {Promise<inserted>} Promise with success or error message.
+ */
 const registerNewUser = (userData) => {
     return new Promise((resolve, reject) => {
 

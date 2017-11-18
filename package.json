@@ -8,7 +8,7 @@
     "test": "mocha src/**/**.spec.js",
     "lint": "eslint src",
     "lint-autofix": "eslint src --fix",
-    "build-docs": "jsdoc -r ./src -d docs",
+    "build-docs": "jsdoc -r ./src ./README.md -d docs",
     "serve-docs": "http-server ./docs -o -c-1",
     "docsBuildAndServe": "npm run build-docs && npm run serve-docs"
   },

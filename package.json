@@ -9,7 +9,8 @@
     "lint": "eslint src",
     "lint-autofix": "eslint src --fix",
     "build-docs": "jsdoc -r ./src -d docs",
-    "serve-docs": "http-server ./docs"
+    "serve-docs": "http-server ./docs -o -c-1",
+    "docsBuildAndServe": "npm run build-docs && npm run serve-docs"
   },
   "repository": {
     "type": "git",

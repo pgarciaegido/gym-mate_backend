@@ -1,3 +1,5 @@
+/** @module Signup/Manager */
+
 const { registerNewUser } = require('../dao/signupDao');
 
 /**

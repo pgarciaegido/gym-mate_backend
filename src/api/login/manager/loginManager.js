@@ -1,3 +1,5 @@
+/** @module Login/Manager */
+
 const { checkCredentialsDao } = require('../dao/loginDao');
 
 /**

@@ -1,3 +1,5 @@
+/** @module PasswordRecovery/Dao */
+
 const Mongo = require('mongodb').MongoClient;
 const Boom = require('boom');
 const Bcrypt = require('bcrypt');

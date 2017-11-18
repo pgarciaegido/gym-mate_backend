@@ -1,3 +1,5 @@
+/** @module PasswordRecovery/Manager/Email */
+
 const nodemailer = require('nodemailer');
 const Boom = require('boom');
 

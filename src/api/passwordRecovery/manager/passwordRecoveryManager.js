@@ -1,3 +1,5 @@
+/** @module PasswordRecovery/Manager */
+
 const Boom = require('boom');
 const { emailExists, setNewPasswordDao } = require('../dao/passwordRecoveryDao');
 const { sendEmail } = require('./sendRecoveryPassEmail');

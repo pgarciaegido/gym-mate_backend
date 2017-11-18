@@ -1,3 +1,5 @@
+/** @module Signup/Dao */
+
 const Mongo = require('mongodb').MongoClient;
 const Bcrypt = require('bcrypt');
 const Boom = require('boom');
@@ -8,6 +10,7 @@ const saltRounds = 10;
 /**
  * @description Registers new user in db. First checks that user email does not exists, then hash
  * password and eventually inserts it.
+ * @memberof module:Signup
  * @param {Object} userData User data brought from the form.
  * @returns {Promise<inserted>} Promise with success or error message.
  */

@@ -1,3 +1,5 @@
+/** @module Login/Dao */
+
 const Mongo = require('mongodb').MongoClient;
 const Bcrypt = require('bcrypt');
 const Boom = require('boom');

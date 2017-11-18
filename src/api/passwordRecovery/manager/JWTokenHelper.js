@@ -1,3 +1,5 @@
+/** @module PasswordRecovery/Manager/JWT */
+
 const jwt = require('jwt-simple');
 const Boom = require('boom');
 

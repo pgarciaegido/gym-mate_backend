@@ -3,3 +3,4 @@ node_modules
 docs
 out
 src/config/secrets.js
+docs_readme.md

@@ -32,7 +32,7 @@ const sendEmail = (emailTo, userName, token) => {
             subject: 'Gym Mate password recovery',
             html: `<div>
                 <b>Hello ${userName}! This is a password recovery service :)</b>
-                <a href="http://localhost:5000/introduce-new-password/${emailTo}/${token}">Click here to change your password</a>
+                <a href="http://localhost:8080/change-password?email=${emailTo}&token=${token}">Click here to change your password</a>
             </div>`
         };
 

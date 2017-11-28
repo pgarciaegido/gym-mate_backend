@@ -13,7 +13,6 @@ const saltRounds = 10;
  * @return {Promise<userInfo>} Promise with user info or error.
  */
 const emailExists = (email) => {
-    console.log(email.email);
     return new Promise((resolve, reject) => {
 
         Mongo.connect(uri)
